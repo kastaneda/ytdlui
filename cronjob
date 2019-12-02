@@ -1,20 +1,25 @@
 #!/bin/sh
+
+# change directory to script's directory
 cd -P -- "$(dirname -- "$0")"
 
+# get one line from list_todo.txt
 # no file locking, sorry
 read line < list_todo.txt
 
+# remove first line in list_todo.txt
 tail -n +2 list_todo.txt > list_tmp
 chmod --reference=list_todo.txt list_tmp
 mv list_tmp list_todo.txt
 
 if [ ! -z "$line" ]
 then
+  # call dockerized youtube-dl
   docker run -it --rm \
       -v $(pwd)/downloads:/media \
-      -e LC_ALL=en_US.UTF-8 \
       ytdl youtube-dl -q "$line"
 
+  # minimalistic error logging
   if [ $? -eq 0 ]
   then
     echo "$line" >> list_done.txt
