@@ -83,5 +83,5 @@ javascript:window.location="http://ytdl.localhost/ui.php?url="+encodeURIComponen
 
 (you need to replace `ytdl.localhost` to your script path).
 
-[1] https://github.com/ytdl-org/youtube-dl/
-[2] https://httpd.apache.org/docs/2.4/mod/mod_autoindex.html
+[1]: https://github.com/ytdl-org/youtube-dl/
+[2]: https://httpd.apache.org/docs/2.4/mod/mod_autoindex.html
