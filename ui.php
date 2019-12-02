@@ -40,6 +40,7 @@ if (isset($_GET['url'])) {
     }
 }
 
+header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
 if (isset($_GET['output']) && ($_GET['output'] == 'image')) {
     $file = $download_status ? 'status_good.png' : 'status_bad.png';
     header('Content-type: image/png');

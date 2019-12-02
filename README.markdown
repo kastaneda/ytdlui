@@ -84,8 +84,7 @@ javascript:window.location="http://ytdl.localhost/ui.php?url="+encodeURIComponen
 Alternative bookmarklet (unstable, work in progress):
 
 ```js
-javascript:
-(function(){var el=document.createElement('div'); el.innerHTML='<div style="position: fixed; left: 50%; top: 50%; margin: -25px 0 0 -150px"><img src="http://ytdl.localhost/ui.php?url='+encodeURIComponent(window.location.href)+'&output=image"></div>'; el.onclick=function(e) { this.parentNode.removeChild(this); }; document.body.appendChild(el); })();
+javascript:(function(){var el=document.createElement('div');el.innerHTML='<div style="position:fixed;right:25px;top:25px;background:#eea;padding:10px;z-index:9999"><img alt="Adding to list..." src="http://ytdl.localhost/ui.php?url='+encodeURIComponent(window.location.href)+'&output=image"></div>';el.onclick=function(e){this.parentNode.removeChild(this);};document.body.appendChild(el);})();
 ```
 
 (you need to replace `ytdl.localhost` to your script path).
