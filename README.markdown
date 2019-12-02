@@ -4,7 +4,7 @@ Local video cache
 Small web UI for the amazing [`youtube-dl`][1] app.
 For some reasons (kinda paranoia), the downloader is running containerized.
 
-There is PHP all-in-one script `ui.php` and shell script `cronjob`.
+There is PHP script `ui.php` and shell script `cronjob`.
 Obviously, PHP script should be accessible from your web server.
 
 I found it convenient to have `downloads` subfolder accessible from
@@ -79,6 +79,13 @@ There is simple bookmarklet for adding videos to the download queue:
 
 ```js
 javascript:window.location="http://ytdl.localhost/ui.php?url="+encodeURIComponent(window.location.href);
+```
+
+Alternative bookmarklet (unstable, work in progress):
+
+```js
+javascript:
+(function(){var el=document.createElement('div'); el.innerHTML='<div style="position: fixed; left: 50%; top: 50%; margin: -25px 0 0 -150px"><img src="http://ytdl.localhost/ui.php?url='+encodeURIComponent(window.location.href)+'&output=image"></div>'; el.onclick=function(e) { this.parentNode.removeChild(this); }; document.body.appendChild(el); })();
 ```
 
 (you need to replace `ytdl.localhost` to your script path).

@@ -27,19 +27,23 @@ function render_ui(?string $message = null)
 </html><?php
 }
 
+$message = $download_status = null;
+
 if (isset($_GET['url'])) {
     $url = $_GET['url'];
-    if (add_to_download_list($url)) {
+    if ($download_status = add_to_download_list($url)) {
         $message = sprintf(
             'URL <a href="%s">%s</a> is scheduled for downloading',
             $url,
             htmlspecialchars($url)
         );
-    } else {
-        $message = 'Something went wrong';
     }
-    render_ui($message);
-} else {
-    render_ui();
 }
 
+if (isset($_GET['output']) && ($_GET['output'] == 'image')) {
+    $file = $download_status ? 'status_good.png' : 'status_bad.png';
+    header('Content-type: image/png');
+    echo file_get_contents(__DIR__ . '/' . $file);
+} else {
+    render_ui($message);
+}
