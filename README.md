@@ -9,8 +9,7 @@ I presume that you already know what [youtube-dl][1] is.
 
 Important point is that I usally do not want to interrupt the video.
 Just make a side-note to download it later.
-There is non-blocking bookmarklet to enqueue current page.
-
+There is non-blocking bookmarklet to enqueue current URL.
 Actual downloading is done via slow lazy cronjob, one video per run.
 
 
@@ -44,13 +43,15 @@ Prerequisites: `make`, Docker, and web server with PHP.
 PHP script `ui.php` must be accessible from your web server.
 
 There is no index file. I prefer to use it with [autoindex][2] enabled.
-I like to see internals and browse `downloads/` subfolder.
+I like to see internals (like `list_errors.txt`),
+and to be able browse `downloads/` subfolder.
 
 ### Note about permissions
 
  - PHP process (e.g., FPM) must have write permission to file `list_todo.txt`;
- - Cron job must have write permission to files `list_todo.txt`,
-   `list_done.txt`, `list_errors.txt`, and to subfolder `downloads`;
+ - Cron job must have write permission to current folder,
+   to files `list_todo.txt`, `list_done.txt`, `list_errors.txt`,
+   and to subfolder `downloads`;
  - Command `make install` will cast dumbest 0777/0666 chmod to ensure that.
 
 Note: those folder and files is not included in this Git repository.
