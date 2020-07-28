@@ -1,7 +1,7 @@
-FROM ubuntu:latest
+FROM ubuntu:bionic
 
-RUN apt-get update && \
-    apt-get install -y python-pip locales && \
+RUN apt-get -q update && \
+    apt-get install -qy python-pip locales && \
     pip install --upgrade youtube_dl
 
 # youtube-dl requires locale to save non-ASCII chars in filenames.
