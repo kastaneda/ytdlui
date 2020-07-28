@@ -12,4 +12,10 @@ build:
 rebuild:
 	docker build -t ytdlui --no-cache ./
 
-.PHONY: all install build rebuild
+restart:
+	cat list_errors.txt >> list_todo.txt
+	touch list_tmp
+	chmod --reference=list_errors.txt list_tmp
+	mv list_tmp list_errors.txt
+
+.PHONY: all install build rebuild restart
