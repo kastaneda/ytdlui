@@ -28,10 +28,10 @@ How to install it
 
 Prerequisites: `make`, Docker, and web server with PHP.
 
-1. Download (or `git clone`) it;
-2. Configure your web server (see below);
-3. Setup folders and permissions: run `make install` (see below);
-4. Build Docker image: run `make build`;
+1. Download (or `git clone`) it
+2. Configure your web server (see below)
+3. Setup folders and permissions: run `make install` (see below)
+4. Build Docker image: run `make build`
 5. Setup cronjob: run `crontab -e`, and add something like this:
 
 ```crontab
@@ -48,10 +48,10 @@ and to be able browse `downloads/` subfolder.
 
 ### Note about permissions
 
- - PHP process (e.g., FPM) must have write permission to file `list_todo.txt`;
+ - PHP process (e.g., FPM) must have write permission to file `list_todo.txt`
  - Cron job must have write permission to current folder,
    to files `list_todo.txt`, `list_done.txt`, `list_errors.txt`,
-   and to subfolder `downloads`;
+   and to subfolder `downloads`
  - Command `make install` will cast dumbest 0777/0666 chmod to ensure that.
 
 Note: those folder and files is not included in this Git repository.
