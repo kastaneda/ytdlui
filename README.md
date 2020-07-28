@@ -1,93 +1,78 @@
-Local video cache
-=================
+Set of tools to run dockerized `youtube-dl` from bookmarklet
+============================================================
 
-Small web UI for the amazing [`youtube-dl`][1] app.
-For some reasons (kinda paranoia), the downloader is running containerized.
+Sometimes, while watching internet video, I want to make a local copy.
+To save it, to not waste traffic and to be able watch it offline.
+This app is designed to automate such tasks.
 
-There is PHP script `ui.php` and shell script `cronjob`.
-Obviously, PHP script should be accessible from your web server.
+I presume that you already know what [youtube-dl][1] is.
 
-I found it convenient to have `downloads` subfolder accessible from
-the web server, presuming that [directory listing][2] is turned on.
-YMMV.
 
 Security considerations
 -----------------------
 
-I plan to run this only on safe environment, like localhost or home LAN.
-
-I think it is very bad idea to run the app on publically available server.
+**WARNING.**
+This is web app intended for personal use on local web server.
 Think yourself how to restrict access to your installation.
 
-Building Docker image
----------------------
-
-No ready-to-use docker images published, sorry.
-You can build image by running such command:
-
-```sh
-docker build -t ytdl ./
-```
-
-If you want to force rebuilt image (to get latest _youtube-dl_ version),
-do this:
+If you don't know what it's about, stop now.
 
 
-```sh
-docker build -t ytdl --no-cache ./
-```
+How to install it
+-----------------
 
-Install
--------
+Prerequisites: `make`, Docker, and web server with PHP.
 
-PHP process (e.g., FPM) must have write permission to file `list_todo.txt`.
-
-Script named `cronjob` must have write permission to files `list_todo.txt`,
-`list_done.txt`, `list_errors.txt`, and to subfolder `downloads`.
-
-Those folder and files is not included in this Git repository.
-Moreover, they are listed in `.gitignore`.
-You have to create them by youself.
-
-```sh
-mkdir -m777 downloads
-
-touch list_todo.txt list_done.txt list_errors.txt
-chmod 0666 list_todo.txt list_done.txt list_errors.txt
-```
-
-NOTE: of course, it would be better to avoid 0666 and 0777 file modes.
-This is just a rude example. Think youself on your host security.
-Ensure that `./cronjob` and PHP app both can access their files.
-
-Cronjob
--------
-
-The script downloads one video per run, to avoid high traffic or CPU load.
-
-You can edit user's crontab with command `crontab -e`.
-Here is example user's crontab line:
+1. Download (or `git clone`) it
+2. Configure your web server (see below)
+3. Setup folders and permissions: run `make install` (see below)
+4. Build Docker image: run `make build`
+5. Setup cronjob: run `crontab -e`, and add something like this::
 
 ```crontab
 */15 * * * * /var/www/vhosts/ytdl.localhost/cronjob
 ```
 
-Bookmarklet
------------
+### Note about configuring web server
 
-There is simple bookmarklet for adding videos to the download queue:
+PHP script `ui.php` must be accessible from your web server.
+
+There is no index file. I prefer to use it with [autoindex][2] enabled.
+I like to see internals and browse `downloads/` subfolder.
+
+### Note about permissions
+
+ - PHP process (e.g., FPM) must have write permission to file `list_todo.txt`
+ - Cron job must have write permission to files `list_todo.txt`,
+   `list_done.txt`, `list_errors.txt`, and to subfolder `downloads`.
+ - Command `make install` will cast dumbest 0777/0666 chmod to ensure that.
+
+Note: those folder and files is not included in this Git repository.
+Moreover, they are listed in `.gitignore`.
+
+Note: of course, it would be better to avoid 0666 and 0777 file modes.
+This is just a rude example. Think youself on your host security.
+Ensure that `./cronjob` and PHP app both can access their files.
+
+### Note about cronjob
+
+The script downloads one video per run, to avoid high traffic or CPU load.
+
+
+How to use it
+-------------
+
+Important point is that I usally do not want to interrupt the video.
+Just make a side-note to download it later.
+
+So, I usally call the app with such non-intrusive bookmarklet:
 
 ```js
-javascript:window.location="http://ytdl.localhost/ui.php?url="+encodeURIComponent(window.location.href);
+javascript:(function(){var el=document.createElement('div');el.innerHTML='<div style="position:fixed;right:25px;top:25px;background:#eea;padding:10px;z-index:9999"><img alt="Adding to list..." src="http://ytdlui.localhost/ui.php?url='+encodeURIComponent(window.location.href)+'&output=image"></div>';el.onclick=function(e){this.parentNode.removeChild(this);};document.body.appendChild(el);})();
 ```
 
-Alternative bookmarklet (unstable, work in progress):
+(you need to replace `ytdlui.localhost` to your script path).
 
-```js
-javascript:(function(){var el=document.createElement('div');el.innerHTML='<div style="position:fixed;right:25px;top:25px;background:#eea;padding:10px;z-index:9999"><img alt="Adding to list..." src="http://ytdl.localhost/ui.php?url='+encodeURIComponent(window.location.href)+'&output=image"></div>';el.onclick=function(e){this.parentNode.removeChild(this);};document.body.appendChild(el);})();
-```
-
-(you need to replace `ytdl.localhost` to your script path).
 
 [1]: https://github.com/ytdl-org/youtube-dl/
 [2]: https://httpd.apache.org/docs/2.4/mod/mod_autoindex.html
