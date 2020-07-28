@@ -17,7 +17,7 @@ then
   # call dockerized youtube-dl
   docker run -it --rm \
       -v $(pwd)/downloads:/downloads \
-      ytdl youtube-dl -q "$line"
+      ytdlui youtube-dl -q "$line"
 
   # minimalistic error logging
   if [ $? -eq 0 ]
