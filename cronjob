@@ -16,7 +16,7 @@ if [ ! -z "$line" ]
 then
   # call dockerized youtube-dl
   docker run -it --rm \
-      -v $(pwd)/downloads:/media \
+      -v $(pwd)/downloads:/downloads \
       ytdl youtube-dl -q "$line"
 
   # minimalistic error logging
