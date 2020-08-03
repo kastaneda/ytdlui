@@ -35,7 +35,7 @@ Prerequisites: `make`, Docker, and web server with PHP.
 5. Setup cronjob: run `crontab -e`, and add something like this:
 
 ```crontab
-*/15 * * * * /var/www/vhosts/ytdl.localhost/cronjob
+*/15 * * * * /var/www/vhosts/ytdlui.localhost/cronjob
 ```
 
 ### Note about configuring web server
