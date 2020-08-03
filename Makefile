@@ -1,7 +1,7 @@
 all: install build
 
 install:
-	mkdir downloads
+	mkdir -p downloads
 	chmod 0777 downloads
 	touch list_todo.txt list_done.txt list_errors.txt
 	chmod 0666 list_todo.txt list_done.txt list_errors.txt
