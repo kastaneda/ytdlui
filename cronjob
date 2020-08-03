@@ -7,6 +7,8 @@ cd -P -- "$(dirname -- "$0")"
 # no file locking, sorry
 read line < list_todo.txt
 
+if [ "z$DEBUG" = "z1" ]; then echo "line = $line"; fi
+
 # remove first line in list_todo.txt
 tail -n +2 list_todo.txt > list_tmp
 chmod --reference=list_todo.txt list_tmp
@@ -14,10 +16,13 @@ mv list_tmp list_todo.txt
 
 if [ ! -z "$line" ]
 then
+  ARG="-q --no-playlist"
+  if [ "z$DEBUG" = "z1" ]; then ARG="--no-playlist"; fi
+
   # call dockerized youtube-dl
   docker run -it --rm \
       -v $(pwd)/downloads:/downloads \
-      ytdlui youtube-dl -q "$line"
+      ytdlui youtube-dl $ARG "$line"
 
   # minimalistic error logging
   if [ $? -eq 0 ]
