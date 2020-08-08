@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# change directory
+cd `dirname "$0"`
+
+# run interactively if STDOUT is not a pipe
+ARG=""
+if [ -t 1 ]; then ARG="-it"; fi
+
+# run it
+docker run $ARG --rm -v $(pwd)/downloads:/downloads kastaneda/ytdlui $@
