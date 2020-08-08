@@ -31,7 +31,7 @@ Prerequisites: `make`, Docker, and web server with PHP.
 1. Download (or `git clone`) it
 2. Configure your web server (see below)
 3. Setup folders and permissions: run `make install` (see below)
-4. Build Docker image: run `make build`
+4. (Optional) Build Docker image: run `make build`
 5. Setup cronjob: run `crontab -e`, and add something like this:
 
 ```crontab

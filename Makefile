@@ -7,10 +7,10 @@ install:
 	chmod 0666 list_todo.txt list_done.txt list_errors.txt
 
 build:
-	docker build -t ytdlui ./
+	docker build -t kastaneda/ytdlui ./
 
 rebuild:
-	docker build -t ytdlui --no-cache ./
+	docker build -t kastaneda/ytdlui --no-cache ./
 
 restart:
 	cat list_errors.txt >> list_todo.txt

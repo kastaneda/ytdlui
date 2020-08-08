@@ -22,7 +22,7 @@ then
   # call dockerized youtube-dl
   docker run -it --rm \
       -v $(pwd)/downloads:/downloads \
-      ytdlui youtube-dl $ARG "$line"
+      kastaneda/ytdlui youtube-dl $ARG "$line"
 
   # minimalistic error logging
   if [ $? -eq 0 ]
