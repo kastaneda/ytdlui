@@ -15,7 +15,7 @@ mv list_tmp list_todo.txt
 if [ ! -z "$line" ]
 then
   # call dockerized youtube-dl
-  ./run youtube-dl -q --no-playlist "$line"
+  ./run yt-dlp -q --no-playlist "$line"
 
   # minimalistic error logging
   if [ $? -eq 0 ]
